@@ -1,93 +1,79 @@
-import { useState } from "react";
-import { Briefcase, ChevronDown, ChevronUp, ArrowRight } from "lucide-react";
-import { experiences } from "@/data/portfolio-data";
+import { Briefcase, Code, Cog, Users, CheckCircle } from "lucide-react";
+import { experiences } from "@/data/resume-data";
+
+const iconMap = {
+  briefcase: Briefcase,
+  cog: Cog,
+  users: Users,
+  code: Code
+};
 
 export default function ExperienceTimeline() {
-  const [expandedItems, setExpandedItems] = useState<number[]>([]);
-
-  const toggleExpanded = (id: number) => {
-    setExpandedItems(prev => 
-      prev.includes(id) 
-        ? prev.filter(item => item !== id)
-        : [...prev, id]
-    );
+  const getIcon = (id: string, type: string) => {
+    if (id === "kta") return Briefcase;
+    if (id === "euronet") return Users;
+    if (type === "development") return Code;
+    return Cog;
   };
 
   return (
-    <section id="experience" className="py-20 bg-slate-50">
+    <section id="experience" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" data-testid="experience-title">
-            Professional Experience
-          </h2>
-          <p className="text-lg text-gray-600" data-testid="experience-subtitle">
-            A journey of continuous growth and technical excellence
+          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Professional Journey</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            A decade of experience spanning quality assurance leadership and full-stack development, 
+            consistently delivering high-quality software solutions across diverse industries.
           </p>
         </div>
 
-        <div className="relative">
-          {/* Timeline Line */}
-          <div className="absolute left-4 md:left-1/2 transform md:-translate-x-px top-0 bottom-0 w-0.5 bg-blue-600"></div>
-
-          {experiences.map((experience, index) => (
-            <div key={experience.id} className="relative flex items-center mb-12">
-              <div className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 w-8 h-8 bg-blue-600 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
-                <Briefcase className="text-white" size={16} />
-              </div>
-              
-              <div className={`ml-12 md:ml-0 md:w-1/2 ${
-                experience.isLeft ? 'md:pr-8 md:text-right' : 'md:pl-8 md:ml-auto'
-              }`}>
-                <div 
-                  className={`bg-white rounded-xl shadow-lg p-8 hover:shadow-xl transition-shadow duration-300 ${
-                    !experience.isCondensed ? 'cursor-pointer' : ''
-                  }`}
-                  onClick={() => !experience.isCondensed && toggleExpanded(experience.id)}
-                  data-testid={`experience-card-${experience.id}`}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className={`text-sm font-medium px-3 py-1 rounded-full ${
-                      experience.isCurrent ? 'text-blue-600 bg-blue-50' : 'text-gray-500 bg-gray-50'
-                    }`}>
-                      {experience.period}
-                    </span>
-                    {!experience.isCondensed && (
-                      <button data-testid={`expand-button-${experience.id}`}>
-                        {expandedItems.includes(experience.id) ? 
-                          <ChevronUp className="text-gray-400" size={20} /> : 
-                          <ChevronDown className="text-gray-400" size={20} />
-                        }
-                      </button>
+        <div className="timeline-line relative max-w-4xl mx-auto">
+          {experiences.map((exp, index) => {
+            const IconComponent = getIcon(exp.id, exp.type);
+            
+            return (
+              <div key={exp.id} className="flex flex-col md:flex-row items-start mb-12 relative">
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center relative z-10 mb-4 md:mb-0 md:mr-8 ${
+                  exp.current ? "bg-primary" : exp.type === "development" ? "bg-accent" : "bg-primary"
+                }`}>
+                  <IconComponent className="text-white" size={16} />
+                </div>
+                
+                <div className={`rounded-xl p-6 card-hover flex-1 ${
+                  exp.type === "development" 
+                    ? "bg-gradient-to-r from-accent/5 to-primary/5 border border-accent/20" 
+                    : "bg-gray-50"
+                }`}>
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-3">
+                    <h3 className="text-xl font-semibold text-secondary" data-testid={`title-${exp.id}`}>
+                      {exp.title}
+                    </h3>
+                    {exp.current && (
+                      <span className="text-sm font-medium text-accent bg-accent/10 px-3 py-1 rounded-full">
+                        Current
+                      </span>
                     )}
                   </div>
                   
-                  <h3 className="text-xl font-bold text-gray-900 mb-2" data-testid={`title-${experience.id}`}>
-                    {experience.title}
-                  </h3>
-                  <h4 className="text-lg font-medium text-blue-600 mb-4" data-testid={`company-${experience.id}`}>
-                    {experience.company}, {experience.location}
-                  </h4>
+                  <p className="text-primary font-medium mb-2" data-testid={`company-${exp.id}`}>
+                    {exp.company} • {exp.location}
+                  </p>
+                  <p className="text-muted-foreground text-sm mb-4" data-testid={`period-${exp.id}`}>
+                    {exp.period}
+                  </p>
                   
-                  <div className="text-gray-600 mb-4" data-testid={`description-${experience.id}`}>
-                    <p>{experience.description}</p>
-                  </div>
-                  
-                  {!experience.isCondensed && expandedItems.includes(experience.id) && experience.achievements.length > 0 && (
-                    <div data-testid={`achievements-${experience.id}`}>
-                      <ul className="space-y-2 text-gray-600">
-                        {experience.achievements.map((achievement, achIndex) => (
-                          <li key={achIndex} className="flex items-start" data-testid={`achievement-${experience.id}-${achIndex}`}>
-                            <ArrowRight className="text-blue-600 mr-2 mt-1 flex-shrink-0" size={16} />
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <ul className="space-y-2 text-gray-700">
+                    {exp.achievements.map((achievement, achIndex) => (
+                      <li key={achIndex} className="flex items-start" data-testid={`achievement-${exp.id}-${achIndex}`}>
+                        <CheckCircle className="text-accent mt-1 mr-2 flex-shrink-0" size={16} />
+                        <span>{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
