@@ -11,8 +11,8 @@ export default function HeroSection() {
   };
 
   const handleDownloadResume = () => {
-    // Download the actual resume PDF
-    window.open('/Baxish_Patel_Resume_QA.pdf', '_blank');
+    // In a real implementation, this would download the actual resume PDF
+    window.open('/resume.pdf', '_blank');
   };
 
   return (

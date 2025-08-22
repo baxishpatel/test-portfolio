@@ -4,6 +4,9 @@ import { personalInfo } from "@/data/portfolio-data";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 interface ContactFormData {
   name: string;
@@ -13,11 +16,32 @@ interface ContactFormData {
 }
 
 export default function ContactSection() {
+  const { toast } = useToast();
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
     subject: '',
     message: ''
+  });
+
+  const contactMutation = useMutation({
+    mutationFn: async (data: ContactFormData) => {
+      return await apiRequest('POST', '/api/contact', data);
+    },
+    onSuccess: () => {
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    },
   });
 
   const handleInputChange = (field: keyof ContactFormData, value: string) => {
@@ -28,28 +52,15 @@ export default function ContactSection() {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.message) {
-      alert("Please fill in all required fields.");
+      toast({
+        title: "Required Fields Missing",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
       return;
     }
 
-    // Create mailto link with form data
-    const subject = formData.subject || 'Portfolio Contact';
-    const body = `Hi Baxish,
-
-Name: ${formData.name}
-Email: ${formData.email}
-
-Message:
-${formData.message}
-
-Best regards,
-${formData.name}`;
-
-    const mailtoLink = `mailto:${personalInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
-    
-    // Reset form
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    contactMutation.mutate(formData);
   };
 
   return (
@@ -192,11 +203,12 @@ ${formData.name}`;
               
               <Button 
                 type="submit"
+                disabled={contactMutation.isPending}
                 className="w-full py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-lg hover:shadow-xl"
                 data-testid="button-submit-contact"
               >
                 <Send className="mr-2" size={16} />
-                Send Message
+                {contactMutation.isPending ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>
