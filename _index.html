@@ -12,9 +12,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
         * {
             margin: 0;
@@ -333,7 +330,14 @@
         }
 
         .project-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 1rem;
+        }
+
+        .project-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
         }
 
         .project-title {
@@ -817,43 +821,6 @@
             opacity: 1;
             transform: scale(1);
         }
-        .fab.fa-linkedin:hover {
-            color: #0A66C2;      /* LinkedIn blue */
-            background-color: #e8f4fd;
-            border-radius: 50%;
-            transition: color 0.3s, background 0.3s;
-            box-shadow: 0 2px 8px rgba(10, 102, 194, 0.15);
-        }
-        .fab.fa-github:hover {
-            color: #171515;         /* GitHub black */
-            background-color: #f4f4f4;
-            border-radius: 50%;
-            transition: color 0.3s, background 0.3s;
-            box-shadow: 0 2px 8px rgba(23, 21, 21, 0.15);
-        }
-        .fas.fa-phone:hover {
-    color: #059669;           /* Accent green */
-    background-color: #e6f7f1;
-    border-radius: 50%;
-    transition: color 0.3s, background 0.3s;
-    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.15);
-}
-
-.fas.fa-envelope:hover {
-    color: #3b82f6;           /* Primary blue */
-    background-color: #eaf2fe;
-    border-radius: 50%;
-    transition: color 0.3s, background 0.3s;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
-}
-
-.fas.fa-map-marker-alt:hover {
-    color: #d97706;           /* Orange for location */
-    background-color: #fff7ed;
-    border-radius: 50%;
-    transition: color 0.3s, background 0.3s;
-    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.15);
-}
     </style>
 </head>
 <body>
@@ -869,7 +836,7 @@
                 <li><a href="#education">Education</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             <div class="mobile-menu" id="mobileMenu">
                 <a href="#about" onclick="closeMobileMenu()">About</a>
                 <a href="#experience" onclick="closeMobileMenu()">Experience</a>
@@ -888,23 +855,23 @@
             <p class="subtitle fade-in">Quality Assurance Specialist</p>
             <div class="contact-info fade-in">
                 <div class="contact-item">
-                    <i class="fas fa-phone"></i>
+                    <span>📞</span>
                     <span>316-221-0250</span>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
+                    <span>✉️</span>
                     <span>baxishpatel@gmail.com</span>
                 </div>
                 <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
+                    <span>📍</span>
                     <span>Andover, KS</span>
                 </div>
                 <div class="contact-item">
-                    <i class="fab fa-linkedin"></i>
+                    <span>💼</span>
                     <span>LinkedIn</span>
                 </div>
                 <div class="contact-item">
-                    <i class="fab fa-github"></i>
+                    <span>💼</span>
                     <span>GitHub</span>
                 </div>
             </div>
@@ -1072,6 +1039,7 @@
             <div class="projects-grid">
                 <div class="project-card fade-in">
                     <div class="project-header">
+                        <div class="project-icon">⚙️</div>
                         <div class="project-title">CI/CD Pipeline for Microservices</div>
                     </div>
                     <div class="project-period">Nov. 2022 – Aug. 2023</div>
@@ -1089,6 +1057,7 @@
 
                 <div class="project-card fade-in">
                     <div class="project-header">
+                        <div class="project-icon">🔄</div>
                         <div class="project-title">API Testing Framework</div>
                     </div>
                     <div class="project-period">Sep. 2021 – Dec. 2021</div>
@@ -1106,6 +1075,7 @@
 
                 <div class="project-card fade-in">
                     <div class="project-header">
+                        <div class="project-icon">🤖</div>
                         <div class="project-title">Automated Testing Framework</div>
                     </div>
                     <div class="project-period">Jan. 2020 – Nov. 2020</div>
@@ -1131,7 +1101,7 @@
             <div class="skills-grid">
                 <div class="skill-category fade-in">
                     <div class="skill-header">
-                        <div class="skill-icon"><i class="fas fa-code"></i></div>
+                        <div class="skill-icon">💻</div>
                         <div class="skill-category-title">Programming</div>
                     </div>
                     <div class="skill-tags">
@@ -1150,7 +1120,7 @@
 
                 <div class="skill-category fade-in">
                     <div class="skill-header">
-                        <!-- <div class="skill-icon"><i class="fas fa-flask"></i></div> -->
+                        <div class="skill-icon">🧪</div>
                         <div class="skill-category-title">Testing Tools</div>
                     </div>
                     <div class="skill-tags">
@@ -1175,7 +1145,7 @@
 
                 <div class="skill-category fade-in">
                     <div class="skill-header">
-                        <!-- <div class="skill-icon"><i class="fas fa-tools"></i></div> -->
+                        <div class="skill-icon">🛠️</div>
                         <div class="skill-category-title">Other Tools</div>
                     </div>
                     <div class="skill-tags">
@@ -1201,7 +1171,7 @@
         <div class="container">
             <h2 class="section-title fade-in">Education</h2>
             <div class="education-content scale-in">
-                <!-- <i class="fas fa-graduation-cap education-icon"></i> -->
+                <span class="education-icon">🎓</span>
                 <div class="education-degree">Bachelor of Engineering</div>
                 <div class="education-field">Information Technology</div>
                 <div class="education-institution">Gujarat Technological University, Gujarat, India</div>
@@ -1222,38 +1192,31 @@
                     <h3>Get In Touch</h3>
                     <ul class="contact-list">
                         <li>
-                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div class="contact-icon">📞</div>
                             <div class="contact-info-text">
                                 <span class="contact-label">Phone</span>
                                 <span class="contact-value">316-221-0250</span>
                             </div>
                         </li>
                         <li>
-                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="contact-icon">✉️</div>
                             <div class="contact-info-text">
                                 <span class="contact-label">Email</span>
                                 <span class="contact-value">baxishpatel@gmail.com</span>
                             </div>
                         </li>
                         <li>
-                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div class="contact-icon">📍</div>
                             <div class="contact-info-text">
                                 <span class="contact-label">Location</span>
                                 <span class="contact-value">Andover, KS, 67002</span>
                             </div>
                         </li>
                         <li>
-                            <div class="contact-icon"><i class="fab fa-linkedin"></i></div>
+                            <div class="contact-icon">💼</div>
                             <div class="contact-info-text">
                                 <span class="contact-label">LinkedIn</span>
                                 <span class="contact-value">Professional Profile</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="contact-icon"><i class="fab fa-github"></i></div>
-                            <div class="contact-info-text">
-                                <span class="contact-label">GitHub</span>
-                                <span class="contact-value">Code Repository</span>
                             </div>
                         </li>
                     </ul>
@@ -1292,7 +1255,7 @@
     <!-- Floating Resume Button -->
     <div class="floating-resume">
         <button class="resume-btn" onclick="downloadResume()">
-            <i class="fas fa-download"></i>
+            <span>📄</span>
             <span>Download Resume</span>
         </button>
     </div>
